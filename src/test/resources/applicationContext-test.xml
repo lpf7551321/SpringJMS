@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+    <context:component-scan base-package="com.netease">
+        <context:exclude-filter type="regex" expression="com.netease.controller"></context:exclude-filter>
+    </context:component-scan>
+
+    <context:property-placeholder file-encoding="utf-8"
+                                  location="classpath:/conf/jdbc.properties"></context:property-placeholder>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <jdbc:initialize-database>
+        <jdbc:script location="classpath:database/init.sql" execution="INIT"></jdbc:script>
+        <jdbc:script location="classpath:database/insert-user-data.sql" execution="INIT"></jdbc:script>
+    </jdbc:initialize-database>
+
+
+    <!--注册sqlSessionFactory 通过dataSource来获取数据源操作会话,通过mapperLocation获取dao操作mapper的sql映射-->
+    <!-- mybatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="sqlConfigScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.netease.meta.dao"></property>
+        <property name="markerInterface" value="com.netease.meta.dao.BaseDao"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>

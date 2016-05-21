@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UnitTestOfSpringMVC">
+    <test name="TestController" verbose="10" enabled="true">
+        <packages>
+            <package name="com.netease.controller.*"></package>
+        </packages>
+    </test>
+    <test name="TestDao" verbose="10" enabled="true">
+        <packages>
+            <package name="com.netease.meta.dao.*"></package>
+        </packages>
+    </test>
+    <test name="TestService" enabled="true" verbose="10">
+        <packages>
+            <package name="com.netease.service.*"></package>
+        </packages>
+    </test>
+</suite>
