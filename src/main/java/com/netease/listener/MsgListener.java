@@ -19,7 +19,7 @@ public class MsgListener implements MessageListener {
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try {
-            System.out.println(textMessage.getText());
+            System.out.println(textMessage.getText()+"!!");
         } catch (JMSException e) {
             LOGGER.error("listening occur error", e);
         }

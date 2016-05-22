@@ -56,4 +56,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
+    <import resource="modules/applicationContext-jms.xml"></import>
+
 </beans>

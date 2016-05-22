@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
-    <bean id="targetConnectFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://localhost:61616"></property>
+    <!--<bean id="targetConnectFactory" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+        <!--<property name="jndiName" value="java:comp/env/jms/ConnectionFactory"></property>-->
+    <!--</bean>-->
+    <!--<bean id="queueDestination" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+        <!--<property name="jndiName" value="java:comp/env/jms/Queue"></property>-->
+    <!--</bean>-->
+
+    <bean id="connectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jms/ConnectionFactory"></property>
     </bean>
-    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
-        <property name="targetConnectionFactory" ref="targetConnectFactory"></property>
+    <bean id="queueDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jms/Queue"></property>
     </bean>
+
+    <!--<bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">-->
+        <!--<property name="targetConnectionFactory" ref="targetConnectFactory"></property>-->
+    <!--</bean>-->
 
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"></property>
+        <property name="defaultDestination" ref="queueDestination"></property>
     </bean>
 
-    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="queue"></constructor-arg>
-    </bean>
 
     <bean id="msgListener" class="com.netease.listener.MsgListener"></bean>
 
@@ -26,7 +37,7 @@
         <property name="messageListener" ref="msgListener"></property>
     </bean>
 
-    <bean id="producerService" class="com.netease.service.impl.ProducerServiceImpl"></bean>
+    <bean id="producerService" class="com.netease.service.ProducerServiceImpl"></bean>
 
 
 </beans>

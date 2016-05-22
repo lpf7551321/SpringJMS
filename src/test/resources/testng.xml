@@ -10,9 +10,9 @@
             <package name="com.netease.meta.dao.*"></package>
         </packages>
     </test>
-    <test name="TestService" enabled="true" verbose="10">
-        <packages>
-            <package name="com.netease.service.*"></package>
-        </packages>
+    <test name="TestService" enabled="true" verbose="10" >
+        <classes>
+            <class name="com.netease.service.UserServiceTest"></class>
+        </classes>
     </test>
 </suite>

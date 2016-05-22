@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.netease</groupId>
-    <artifactId>SpringDemo</artifactId>
+    <artifactId>SpringJMS</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>SpringDemo Maven Webapp</name>
+    <name>SpringJMS Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -144,13 +144,11 @@
             <version>1.2.2</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
         </dependency>
-
         <!--testNG-->
         <dependency>
             <groupId>org.testng</groupId>
@@ -174,7 +172,7 @@
     </dependencies>
 
     <build>
-        <finalName>SpringDemo</finalName>
+        <finalName>SpringJMS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -190,7 +188,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://localhost:8080/SpringDemo</url>
+                    <url>http://localhost:8080/SpringJMS</url>
                     <path>/${project.artifactId}</path>
                 </configuration>
             </plugin>
